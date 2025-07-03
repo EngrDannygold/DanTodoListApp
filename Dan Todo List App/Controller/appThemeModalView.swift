@@ -28,8 +28,19 @@ class appThemeModalView: UIView {
     }
     override func layoutSubviews() {
         appThemeView.layer.cornerRadius = 8
-        appThemeSegmentControl.selectedSegmentIndex = 1
-//        appThemeSelected(appThemeSegmentControl)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {return}
+        guard let window = windowScene.windows.first else {return}
+        
+        switch window.overrideUserInterfaceStyle {
+        case .unspecified:
+            appThemeSegmentControl.selectedSegmentIndex = 2
+        case .light:
+            appThemeSegmentControl.selectedSegmentIndex = 0
+        case .dark:
+            appThemeSegmentControl.selectedSegmentIndex = 1
+        @unknown default:
+            appThemeSegmentControl.selectedSegmentIndex = 2
+        }
     }
 
     @IBAction func closeButtonTapped(_ sender: UIButton) {
