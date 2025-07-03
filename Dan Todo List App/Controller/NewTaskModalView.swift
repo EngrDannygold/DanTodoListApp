@@ -70,6 +70,7 @@ class NewTaskModalView: UIView {
     }
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
+        sender.tapBounceButton()
         if descriptionTextView.textColor == UIColor.label, !descriptionTextView.text.isEmpty, descriptionTextView.text.count > 3 {
             let selectedRow = categoryPickerView.selectedRow(inComponent: 0)
             let selectedCategory = CategoryModel.allCases[selectedRow]
