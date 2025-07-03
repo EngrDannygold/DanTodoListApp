@@ -6,3 +6,17 @@
 //
 
 import Foundation
+import UIKit
+
+extension UIView {
+    func tapBounceButton() {
+        UIView.animate(withDuration: 0.15, delay: 0, options: [.curveEaseInOut]) {
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.15, delay: 0, options: [.curveEaseInOut]) {
+                self.transform = CGAffineTransform.identity
+            }
+        }
+
+    }
+}
