@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="appThemeModalView" customModule="Dan_Todo_List_App" customModuleProvider="target">
+            <connections>
+                <outlet property="appThemeSegmentControl" destination="4ek-T4-9ug" id="fUm-pd-nwq"/>
+                <outlet property="appThemeView" destination="iN0-l3-epB" id="i5A-l1-Xa5"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="544" height="327"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fuy-hv-Sgx">
+                    <rect key="frame" x="15" y="25" width="90.333333333333329" height="27.666666666666671"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRS-a4-gO1">
+                    <rect key="frame" x="482.66666666666669" y="21.666666666666668" width="46.333333333333314" height="34.333333333333329"/>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system"/>
+                    <connections>
+                        <action selector="closeButtonTapped:" destination="-1" eventType="touchUpInside" id="yKC-Co-obV"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ha0-Af-ReV">
+                    <rect key="frame" x="15" y="72.666666666666671" width="72" height="16"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4ek-T4-9ug">
+                    <rect key="frame" x="20" y="98.666666666666671" width="504" height="32.000000000000014"/>
+                    <segments>
+                        <segment title="" image="sun.min.fill" catalog="system"/>
+                        <segment title="" image="moon" catalog="system"/>
+                        <segment title="" image="iphone.smartbatterycase.gen1" catalog="system"/>
+                    </segments>
+                    <connections>
+                        <action selector="appThemeSelected:" destination="-1" eventType="valueChanged" id="CZt-Mr-Ke7"/>
+                    </connections>
+                </segmentedControl>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Ha0-Af-ReV" firstAttribute="top" secondItem="Fuy-hv-Sgx" secondAttribute="bottom" constant="20" id="1I7-qx-Ti4"/>
+                <constraint firstItem="4ek-T4-9ug" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="3la-2d-Sl3"/>
+                <constraint firstItem="BRS-a4-gO1" firstAttribute="centerY" secondItem="Fuy-hv-Sgx" secondAttribute="centerY" id="58V-m9-VuP"/>
+                <constraint firstItem="Fuy-hv-Sgx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="ITG-y8-XJS"/>
+                <constraint firstItem="Fuy-hv-Sgx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="JJr-ic-DOu"/>
+                <constraint firstAttribute="trailing" secondItem="BRS-a4-gO1" secondAttribute="trailing" constant="15" id="cGa-As-sxH"/>
+                <constraint firstItem="Ha0-Af-ReV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="igK-c0-akJ"/>
+                <constraint firstItem="4ek-T4-9ug" firstAttribute="top" secondItem="Ha0-Af-ReV" secondAttribute="bottom" constant="10" id="r4Y-JU-w3f"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="4ek-T4-9ug" secondAttribute="trailing" constant="20" id="zkj-OW-eSJ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="4.5801526717557248" y="-165.14084507042256"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="iphone.smartbatterycase.gen1" catalog="system" width="112" height="128"/>
+        <image name="moon" catalog="system" width="128" height="123"/>
+        <image name="sun.min.fill" catalog="system" width="128" height="123"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
