@@ -70,7 +70,7 @@ class NewTaskModalView: UIView {
     }
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
-        sender.tapBounceButton()
+        sender.tapBounceButtonAnimation()
         if descriptionTextView.textColor == UIColor.label, !descriptionTextView.text.isEmpty, descriptionTextView.text.count > 3 {
             let selectedRow = categoryPickerView.selectedRow(inComponent: 0)
             let selectedCategory = CategoryModel.allCases[selectedRow]
@@ -90,6 +90,7 @@ class NewTaskModalView: UIView {
             delegate?.closeView()
         } else {
             descriptionTextView.text = "Please enter a text here..."
+            containerView.shakeViewAnimation()
             descriptionTextView.textColor = UIColor.placeholderText
             descriptionTextView.resignFirstResponder()
         }
@@ -133,6 +134,7 @@ extension NewTaskModalView: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if descriptionTextView.text.isEmpty {
             descriptionTextView.text = "Add Your Caption..."
+            containerView.shakeViewAnimation()
             descriptionTextView.textColor = UIColor.placeholderText
         }
     }

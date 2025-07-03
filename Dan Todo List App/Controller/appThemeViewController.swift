@@ -31,9 +31,15 @@ class appThemeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        modalView.transform = CGAffineTransform(scaleX: 0, y: 0)
         view.addSubview(modalView)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        modalView.presentViewBounceAnimation()
     }
 }
 

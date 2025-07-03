@@ -44,9 +44,7 @@ class NewTaskViewController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 6, options: [.curveEaseOut]) {
-            self.modalView.transform = CGAffineTransform.identity
-        }
+        modalView.presentViewBounceAnimation()
     }
 
 }
