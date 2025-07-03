@@ -12,6 +12,11 @@ Helps you manage your daily tasks with features like task completion toggling, p
 - 🎨 Custom shadow buttons and polished UI design
 - 📱 Fully responsive for iPhone
 
+## 📸 Screenshots
+![Screenshots](https://github.com/EngrDannygold/DanTodoListApp/blob/main/Dan%20Todo%20List%20App/Screenshots.png)
+
+## License
+DanTodoListApp is released under the MIT License. [See License](https://github.com/EngrDannygold/DanTodoListApp/blob/main/LICENSE.md) for details.
 
 ## 🛠 Technologies Used
 
