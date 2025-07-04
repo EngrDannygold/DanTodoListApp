@@ -54,10 +54,13 @@ class appThemeModalView: UIView {
         switch sender.selectedSegmentIndex {
         case 0:
             window.overrideUserInterfaceStyle = .light
+            UserDefaults.standard.set(0, forKey: "interfacePreference")
         case 1:
             window.overrideUserInterfaceStyle = .dark
+            UserDefaults.standard.set(1, forKey: "interfacePreference")
         case 2:
             window.overrideUserInterfaceStyle = .unspecified
+            UserDefaults.standard.set(2, forKey: "interfacePreference")
         default:
             return
         }
