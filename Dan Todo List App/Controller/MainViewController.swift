@@ -26,6 +26,10 @@ class MainViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+        setupNotification()
+    }
+    private func setupView() {
         titleView.clipsToBounds = true
         titleView.layer.cornerRadius = 24
         titleView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -36,7 +40,9 @@ class MainViewController: UIViewController {
         taskTableView.tableFooterView = UIView()
         taskTableView.separatorStyle = .none
         view.addSubview(addButton)
-        
+    }
+    
+    private func setupNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(createTask(_:)), name: .notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(editTask(_:)), name: NSNotification.Name("com.dannygold.swift.editTask"), object: nil)
 
