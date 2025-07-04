@@ -34,7 +34,6 @@ class MainViewController: UIViewController {
         titleView.layer.cornerRadius = 24
         titleView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         taskTableView.dataSource = self
-//        taskTableView.delegate = self
         taskTableView.estimatedRowHeight = 80
         taskTableView.rowHeight = UITableView.automaticDimension
         taskTableView.tableFooterView = UIView()
@@ -45,8 +44,8 @@ class MainViewController: UIViewController {
     private func setupNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(createTask(_:)), name: .notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(editTask(_:)), name: NSNotification.Name("com.dannygold.swift.editTask"), object: nil)
-
     }
+    
     override func viewDidLayoutSubviews() {
         let safeAreaButtom = view.safeAreaInsets.bottom
         let width: CGFloat = 60
@@ -90,7 +89,7 @@ class MainViewController: UIViewController {
 
 
 
-
+//MARK: - Conforms to UITableViewDataSource:
 extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -109,16 +108,10 @@ extension MainViewController: UITableViewDataSource {
         }
     }
 }
-//extension MainViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let tasks = taskArray[indexPath.row]
-//        let oldTaskVC = NewTaskViewController(task: tasks)
-//        present(oldTaskVC, animated: true)
-//    }
-//}
+//MARK: - Conforms to TaskTableViewCellDelegate:
 extension MainViewController: TaskTableViewCellDelegate {
+    
     func editTask(id: String) {
-        
         let tasks = taskArray.first { task in
             task.id == task.id
         }

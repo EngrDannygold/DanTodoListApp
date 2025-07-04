@@ -24,7 +24,6 @@ class TaskTableViewCell: UITableViewCell {
         taskView.clipsToBounds = true
         taskView.layer.cornerRadius = 8
         descriptionLabel.numberOfLines = 0
-//        descriptionLabel.layoutIfNeeded()
         selectionStyle = .none
 }
     
@@ -35,7 +34,6 @@ class TaskTableViewCell: UITableViewCell {
         categoryLabel.text = task.category.rawValue
         categoryLabel.textColor = task.category.color
         descriptionLabel.text = task.caption
-
         dateLabel.text = task.date.formatted()
         let tap = UITapGestureRecognizer(target: self, action: #selector(isComplete))
         isCompleteImageView.addGestureRecognizer(tap)

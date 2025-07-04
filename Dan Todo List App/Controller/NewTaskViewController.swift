@@ -9,6 +9,7 @@ import UIKit
 
 protocol NewTaskViewDelegate: AnyObject {
     func closeView()
+    func presentErrorAlert(title: String, message: String)
 }
 
 class NewTaskViewController: UIViewController {

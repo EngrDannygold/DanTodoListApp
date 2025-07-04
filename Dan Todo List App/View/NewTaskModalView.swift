@@ -45,7 +45,6 @@ class NewTaskModalView: UIView {
         descriptionTextView.delegate = self
         categoryPickerView.dataSource = self
         categoryPickerView.delegate = self
-//        let ads = CategoryModel.Exercise.rawValue
         if let task = task {
             guard let selectedRow = CategoryModel.allCases.firstIndex(of: task.category) else {
                 return
@@ -71,7 +70,7 @@ class NewTaskModalView: UIView {
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
         sender.tapBounceButtonAnimation()
-        if descriptionTextView.textColor == UIColor.label, !descriptionTextView.text.isEmpty, descriptionTextView.text.count > 3 {
+        if descriptionTextView.textColor == UIColor.label, !descriptionTextView.text.isEmpty, descriptionTextView.text.count > 3, descriptionTextView.text.count < 50 {
             let selectedRow = categoryPickerView.selectedRow(inComponent: 0)
             let selectedCategory = CategoryModel.allCases[selectedRow]
             guard let caption = descriptionTextView.text else {
@@ -97,7 +96,7 @@ class NewTaskModalView: UIView {
         }
     }
 }
-
+//MARK: - Conforms to UIPickerViewDataSource:
 extension NewTaskModalView: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -109,6 +108,7 @@ extension NewTaskModalView: UIPickerViewDataSource {
     
 }
 
+//MARK: - Conforms to UIPickerViewDelegate:
 extension NewTaskModalView: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
@@ -125,6 +125,7 @@ extension NewTaskModalView: UIPickerViewDelegate {
     }
 }
 
+//MARK: - Conforms to UITextViewDelegate:
 extension NewTaskModalView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if descriptionTextView.textColor == UIColor.placeholderText {
@@ -141,6 +142,7 @@ extension NewTaskModalView: UITextViewDelegate {
         }
     }
 }
+//MARK: - Extension for Notification Name:
 extension Notification.Name {
     static let notificationName = Notification.Name("com.dannygold.swift.createTask")
 }

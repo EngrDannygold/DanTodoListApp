@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+
 protocol appThemeModalDelegate {
     func closeView()
 }
@@ -44,6 +45,7 @@ class appThemeViewController: UIViewController {
 }
 
 extension appThemeViewController: appThemeModalDelegate {
+    
     func closeView() {
         dismiss(animated: true)
     }
