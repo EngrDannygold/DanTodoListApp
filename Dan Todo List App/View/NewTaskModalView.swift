@@ -91,6 +91,7 @@ class NewTaskModalView: UIView {
         } else {
             descriptionTextView.text = "Please enter a text here..."
             containerView.shakeViewAnimation()
+            delegate?.presentErrorAlert(title: "Invalid Description", message: "Please enter a task description between 4 and 50 characters.")
             descriptionTextView.textColor = UIColor.placeholderText
             descriptionTextView.resignFirstResponder()
         }
@@ -135,6 +136,7 @@ extension NewTaskModalView: UITextViewDelegate {
         if descriptionTextView.text.isEmpty {
             descriptionTextView.text = "Add Your Caption..."
             containerView.shakeViewAnimation()
+            delegate?.presentErrorAlert(title: "Input Too Short", message: "Please enter at least 4 words to continue.")
             descriptionTextView.textColor = UIColor.placeholderText
         }
     }
