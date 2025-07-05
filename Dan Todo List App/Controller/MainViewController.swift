@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RealmSwift
+
 protocol TaskTableViewCellDelegate {
     func isComplete(id: String, complete: Bool)
     func editTask(id: String)
@@ -14,6 +16,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var taskTableView: UITableView!
     var taskArray: [TaskModel] = []
+    let realm = try! Realm()
+
     
     lazy var addButton: UIButton = {
         let button = UIButton()
@@ -28,6 +32,13 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupNotification()
+        
+        let localTasks = realm.objects(LocalTaskModel.self)
+        for localTask in localTasks {
+            let task = TaskModel(id: localTask.id, category: localTask.category, caption: localTask.caption, date: localTask.date, isComplete: localTask.isComplete)
+        taskArray.append(task)
+        }
+        taskTableView.reloadData()
     }
     private func setupView() {
         titleView.clipsToBounds = true
@@ -63,6 +74,21 @@ class MainViewController: UIViewController {
         if let userInfo = notification.userInfo {
             if let newTask = userInfo["newTask"] as? TaskModel {
                 taskArray.append(newTask)
+                let localTask = LocalTaskModel()
+                do {
+                    try realm.write {
+                        localTask.caption = newTask.caption
+                        localTask.category = newTask.category
+                        localTask.date = newTask.date
+                        localTask.id = newTask.id
+                        localTask.isComplete = newTask.isComplete
+                        
+                        realm.add(localTask)
+                    }
+                } catch {
+                    let e = error
+                    print("❌ Failed to creat localTask in Realm:", error.localizedDescription)
+                }
                 taskTableView.reloadData()
             }
         }
@@ -78,7 +104,24 @@ class MainViewController: UIViewController {
                     return
                 }
                 taskArray[index] = oldTask
+        let id = oldTask.id
+        if let localTask = realm.object(ofType: LocalTaskModel.self, forPrimaryKey: id) {
+            do {
+                try realm.write {
+                    localTask.caption = oldTask.caption
+                    localTask.category = oldTask.category
+                    localTask.date = oldTask.date
+                    localTask.isComplete = oldTask.isComplete
+                    
+                    realm.add(localTask)
+                }
+            } catch {
+                let e = error
+                print("❌ Failed to update localTask in Realm:", e.localizedDescription)
+            }
+        }
                 taskTableView.reloadData()
+        
             }
     @IBAction func darkModeButtonPressed(_ sender: UIButton) {
         let darkModeVC = appThemeViewController()
@@ -103,8 +146,14 @@ extension MainViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let id = taskArray[indexPath.row].id
             taskArray.remove(at: indexPath.row)
             taskTableView.deleteRows(at: [indexPath], with: .automatic)
+            if let localTask = realm.object(ofType: LocalTaskModel.self, forPrimaryKey: id) {
+                try! realm.write{
+                    realm.delete(localTask)
+                }
+            }
         }
     }
 }
@@ -113,7 +162,7 @@ extension MainViewController: TaskTableViewCellDelegate {
     
     func editTask(id: String) {
         let tasks = taskArray.first { task in
-            task.id == task.id
+            task.id == id
         }
         guard let tasks = tasks else {return}
         let oldTaskVC = NewTaskViewController(task: tasks)
@@ -122,10 +171,18 @@ extension MainViewController: TaskTableViewCellDelegate {
     
     func isComplete(id: String, complete: Bool) {
         let taskindex = taskArray.firstIndex { task in
-            task.id == task.id
+            task.id == id
         }
         guard let taskindex = taskindex else {return}
-        var tasks = taskArray[taskindex]
-        tasks.isComplete = complete
+        taskArray[taskindex].isComplete = complete
+        if let localTask = realm.object(ofType: LocalTaskModel.self, forPrimaryKey: id) {
+            do {
+                try realm.write {
+                    localTask.isComplete = complete
+                }
+            } catch {
+                print("❌ Failed to update isComplete in Realm:", error.localizedDescription)
+            }
+        }
     }
 }

@@ -7,8 +7,9 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
-enum CategoryModel: String, CaseIterable {
+enum CategoryModel: String, CaseIterable, PersistableEnum {
 case Work, Study, Exercise
     
     var color: UIColor {
