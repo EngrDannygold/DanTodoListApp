@@ -35,6 +35,9 @@ class TaskTableViewCell: UITableViewCell {
         categoryLabel.textColor = task.category.color
         descriptionLabel.text = task.caption
         dateLabel.text = task.date.formatted()
+        
+        isCompleteImageView.image = task.isComplete ? UIImage(systemName: "checkmark.circle") : UIImage(systemName: "circle")
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(isComplete))
         isCompleteImageView.addGestureRecognizer(tap)
         isCompleteImageView.isUserInteractionEnabled = true
