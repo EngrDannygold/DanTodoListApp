@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FAC757EB2E1888020045A724 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = FAC757EA2E1888020045A724 /* Realm */; };
-		FAC757ED2E1888020045A724 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAC757EC2E1888020045A724 /* RealmSwift */; };
+		FAC758FE2E1948710045A724 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAC758FD2E1948710045A724 /* RealmSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAC757ED2E1888020045A724 /* RealmSwift in Frameworks */,
-				FAC757EB2E1888020045A724 /* Realm in Frameworks */,
+				FAC758FE2E1948710045A724 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,8 +83,7 @@
 			);
 			name = "Dan Todo List App";
 			packageProductDependencies = (
-				FAC757EA2E1888020045A724 /* Realm */,
-				FAC757EC2E1888020045A724 /* RealmSwift */,
+				FAC758FD2E1948710045A724 /* RealmSwift */,
 			);
 			productName = "Dan Todo List App";
 			productReference = FA6B40102DFEB45F003070F8 /* Dan Todo List App.app */;
@@ -117,7 +114,7 @@
 			mainGroup = FA6B40072DFEB45F003070F8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				FAC757E92E1888020045A724 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				FAC758FC2E1948710045A724 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FA6B40112DFEB45F003070F8 /* Products */;
@@ -349,25 +346,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FAC757E92E1888020045A724 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		FAC758FC2E1948710045A724 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 20.0.3;
+				minimumVersion = 10.54.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FAC757EA2E1888020045A724 /* Realm */ = {
+		FAC758FD2E1948710045A724 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FAC757E92E1888020045A724 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
-		};
-		FAC757EC2E1888020045A724 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FAC757E92E1888020045A724 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = FAC758FC2E1948710045A724 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
