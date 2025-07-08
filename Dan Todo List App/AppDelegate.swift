@@ -9,7 +9,8 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    static var delegate = UIApplication.shared.delegate as! AppDelegate
+    let list = Todolist(modelName: "TodoList")
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

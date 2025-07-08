@@ -29,12 +29,13 @@ class TaskTableViewCell: UITableViewCell {
     
 
     func configure(withTask task: TaskModel, delegate: TaskTableViewCellDelegate) {
-        categoryView.backgroundColor = task.category.secondaryColor
-        taskViewSideDesign.backgroundColor = task.category.color
-        categoryLabel.text = task.category.rawValue
-        categoryLabel.textColor = task.category.color
+        categoryView.backgroundColor = task.secondaryColor
+        taskViewSideDesign.backgroundColor = task.color
+        categoryLabel.text = task.categoryEnum.rawValue
+        categoryLabel.textColor = task.color
         descriptionLabel.text = task.caption
         dateLabel.text = task.date.formatted()
+        isCompleteImageView.image = task.isComplete ? UIImage(systemName: "checkmark.circle") : UIImage(systemName: "circle")
         let tap = UITapGestureRecognizer(target: self, action: #selector(isComplete))
         isCompleteImageView.addGestureRecognizer(tap)
         isCompleteImageView.isUserInteractionEnabled = true

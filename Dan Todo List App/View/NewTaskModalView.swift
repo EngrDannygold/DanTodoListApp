@@ -12,6 +12,7 @@ class NewTaskModalView: UIView {
     @IBOutlet weak private var categoryPickerView: UIPickerView!
     @IBOutlet private var containerView: UIView!
     var task: TaskModel?
+    let context = Todolist.shared.managedContext
 
     weak var delegate: NewTaskViewDelegate?
     
@@ -46,7 +47,7 @@ class NewTaskModalView: UIView {
         categoryPickerView.dataSource = self
         categoryPickerView.delegate = self
         if let task = task {
-            guard let selectedRow = CategoryModel.allCases.firstIndex(of: task.category) else {
+            guard let selectedRow = CategoryModel.allCases.firstIndex(of: task.categoryEnum) else {
                 return
             }
             descriptionTextView.text = task.caption
@@ -72,19 +73,29 @@ class NewTaskModalView: UIView {
         sender.tapBounceButtonAnimation()
         if descriptionTextView.textColor == UIColor.label, !descriptionTextView.text.isEmpty, descriptionTextView.text.count > 3, descriptionTextView.text.count < 50 {
             let selectedRow = categoryPickerView.selectedRow(inComponent: 0)
-            let selectedCategory = CategoryModel.allCases[selectedRow]
+            let selectedCategory = CategoryModel.allCases[selectedRow].rawValue
             guard let caption = descriptionTextView.text else {
                 return
             }
             if let task = task {
-                let oldTask = TaskModel(id: task.id, category: selectedCategory, caption: caption, date: task.date, isComplete: task.isComplete)
+                let oldTask = task
+                oldTask.category = selectedCategory
+                oldTask.caption = caption
                 let userInfo: [String: Any] = ["oldTask": oldTask]
                 NotificationCenter.default.post(name: Notification.Name("com.dannygold.swift.editTask"), object: nil, userInfo: userInfo)
             } else {
-                let id = UUID().uuidString
-                let newTask = TaskModel(id: id, category: selectedCategory, caption: caption, date: Date(), isComplete: false)
-                let userInfo: [String: Any] = ["newTask": newTask]
-                NotificationCenter.default.post(name: .notificationName, object: nil, userInfo: userInfo)
+                let newTask = TaskModel(context: context)
+                newTask.category = selectedCategory
+                newTask.caption = caption
+                newTask.date = Date()
+                newTask.isComplete = false
+                do {
+                    try context.save()
+                    let userInfo: [String: Any] = ["newTask": newTask]
+                    NotificationCenter.default.post(name: .notificationName, object: nil, userInfo: userInfo)
+                } catch {
+                    print("Error saving new task: \(error)")
+                }
             }
             delegate?.closeView()
         } else {

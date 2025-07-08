@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import CoreData
 protocol TaskTableViewCellDelegate {
-    func isComplete(id: String, complete: Bool)
-    func editTask(id: String)
+    func isComplete(id: ObjectIdentifier, complete: Bool)
+    func editTask(id: ObjectIdentifier)
 }
 class MainViewController: UIViewController {
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var taskTableView: UITableView!
     var taskArray: [TaskModel] = []
+    let context = Todolist.shared.managedContext
     
     lazy var addButton: UIButton = {
         let button = UIButton()
@@ -28,6 +30,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupNotification()
+        fetchData()
     }
     private func setupView() {
         titleView.clipsToBounds = true
@@ -60,26 +63,60 @@ class MainViewController: UIViewController {
         present(newTaskVC, animated: true)
     }
     @objc func createTask(_ notification: Notification) {
-        if let userInfo = notification.userInfo {
-            if let newTask = userInfo["newTask"] as? TaskModel {
-                taskArray.append(newTask)
-                taskTableView.reloadData()
-            }
-        }
+//        if let userInfo = notification.userInfo {
+//            if let newTask = userInfo["newTask"] as? TaskModel {
+//                
+//                let newTaskC = TaskModel(context: context)
+//                newTaskC.category = newTask.category
+//                newTaskC.caption = newTask.caption
+//                newTaskC.date = newTask.date
+//                newTaskC.isComplete = newTask.isComplete
+//                
+//                do {
+//                    try context.save()
+//                } catch {
+//                    let e = error
+//                    print("error save data: \(e.localizedDescription)")
+//                }
+//            }
+//        }
+        fetchData()
     }
     @objc func editTask(_ notification: Notification) {
         guard let userInfo = notification.userInfo, let oldTask = userInfo["oldTask"] as? TaskModel else {
             return
         }
-                let index = taskArray.firstIndex { task in
-                    task.id == oldTask.id
-                }
-        guard let index = index else {
-                    return
-                }
-                taskArray[index] = oldTask
-                taskTableView.reloadData()
-            }
+        let tasks = taskArray.first { task in
+            task.id == oldTask.id
+        }
+        
+        if let oldTaskC = tasks {
+            oldTaskC.category = oldTask.category
+            oldTaskC.caption = oldTask.caption
+            oldTaskC.date = oldTask.date
+            oldTaskC.isComplete = oldTask.isComplete
+        }
+        do {
+            try context.save()
+        } catch {
+            let e = error
+            print("error save data: \(e.localizedDescription)")
+        }
+        fetchData()
+    }
+    func fetchData() {
+        let request = TaskModel.fetchRequest()
+        
+        do {
+            taskArray = try context.fetch(request)
+        } catch {
+            let e = error
+            print("error fetching data: \(e.localizedDescription)")
+        }
+        DispatchQueue.main.async {
+            self.taskTableView.reloadData()
+        }
+    }
     @IBAction func darkModeButtonPressed(_ sender: UIButton) {
         let darkModeVC = appThemeViewController()
         present(darkModeVC, animated: true)
@@ -103,7 +140,15 @@ extension MainViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let taskToRemove = taskArray[indexPath.row]
+            context.delete(taskToRemove)
             taskArray.remove(at: indexPath.row)
+
+            do {
+                try context.save()
+            } catch {
+                print("Failed to delete task: \(error)")
+            }
             taskTableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -111,21 +156,26 @@ extension MainViewController: UITableViewDataSource {
 //MARK: - Conforms to TaskTableViewCellDelegate:
 extension MainViewController: TaskTableViewCellDelegate {
     
-    func editTask(id: String) {
+    func editTask(id: ObjectIdentifier) {
         let tasks = taskArray.first { task in
-            task.id == task.id
+            task.id == id
         }
         guard let tasks = tasks else {return}
         let oldTaskVC = NewTaskViewController(task: tasks)
         present(oldTaskVC, animated: true)
     }
     
-    func isComplete(id: String, complete: Bool) {
-        let taskindex = taskArray.firstIndex { task in
-            task.id == task.id
+    func isComplete(id: ObjectIdentifier, complete: Bool) {
+        let tasks = taskArray.first { task in
+            task.id == id
         }
-        guard let taskindex = taskindex else {return}
-        var tasks = taskArray[taskindex]
+        guard let tasks = tasks else {return}
         tasks.isComplete = complete
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+        fetchData()
     }
 }
